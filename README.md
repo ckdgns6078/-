@@ -1,8 +1,8 @@
 # 우당탕탕 코딩 트라이 팟
 
-# 주제
- 음성인식 API (speech to text)를 활용한 회의록 플렛폼
-
+# 음성인식 API (speech to text)를 활용한 회의록 플렛폼
+ 
+ 
 
 | 이름 | 학번 | GitHub ID | Email |
 |:---:|:---|:---|:---|
