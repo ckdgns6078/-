@@ -7,7 +7,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          gkdnl
+          첫페이지 샘플입니다
         </p>
         <a
           className="App-link"
