@@ -1,9 +1,6 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { Modal, Button, Form, Container } from 'react-bootstrap';
-import AbstractModalHeader from 'react-bootstrap/esm/AbstractModalHeader';
 import KakaoLogout2 from '../components/KakaoLogout2';
-import { WidthWideOutlined } from '@mui/icons-material';
 
 
 

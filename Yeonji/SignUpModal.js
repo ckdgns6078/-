@@ -1,16 +1,17 @@
 import React from 'react';
-import {Modal,Button, Container} from 'react-bootstrap';
+import {Modal} from 'react-bootstrap';
 import KakaoLogin from'../components/KakaoLogin';
-import NaverLogin from'../components/NaverLogin';
+import Naver from '../components/Naver';
 import Facebook from '../components/Facebook';
-import {Link} from 'react-router-dom';
 
 
 const SignUpModal = ({show, onHide})=>{
     function handleClose() {
         onHide(false);
+        //navererror();
     }
     
+
     return (
         <Modal
             show={show}
@@ -26,10 +27,10 @@ const SignUpModal = ({show, onHide})=>{
                 </Modal.Title>
             </Modal.Header>
 
-            <Modal.Body onClick={handleClose}>
+            <Modal.Body>
             <div className="d-grid gap-2" align="center">
                 <KakaoLogin></KakaoLogin>
-                <NaverLogin/>
+                <Naver/>
                 <Facebook></Facebook>
             </div>
             </Modal.Body>
