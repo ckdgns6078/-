@@ -22,10 +22,10 @@ class KakaoLogin extends Component {
                         success: (res) => {
                             console.log("Kakao 사용자 정보", res);
                             sessionStorage.setItem("profile", res.properties.profile_image);
-                            sessionStorage.setItem("id",res.id);
+                            sessionStorage.setItem("id",res.properties.nickname);
                             console.log(window.Kakao.Auth.getAccessToken());//토큰
                             //로그인 후 들어갈 곳
-                            //window.location.href="http://localhost:3001";
+                            window.location.href="http://localhost:3001";
                         },
                         fail: (err) => {
                             console.log(err);

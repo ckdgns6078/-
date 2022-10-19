@@ -11,6 +11,8 @@ import { styled, alpha } from "@mui/material/styles";
 import udttang from "../lib/udttang.png"
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from '@mui/icons-material/Search';
+import { LocalConvenienceStoreOutlined } from '@mui/icons-material';
+
 
 
 const Search = styled("div")(({ theme }) => ({
@@ -54,6 +56,8 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
     justifyContent: "center"
 }));
 
+
+
 export const SidebarData = () => {
     const [signUpModalOn, setSignUpModalOn] = useState(false);
     const [logOutModalOn, setLogOutModalOn] = useState(false);
@@ -64,10 +68,12 @@ export const SidebarData = () => {
 
     useEffect(() => {
         var src = document.getElementById("box");
+        
         if (id != null) {
-            src.innerHTML = "<div>"+ "<Nav.Link>"+sessionStorage.getItem("id")+"</Nav.Link>"+"<button class='profilebutton'> <div class='box'><img class='profile' src='" + sessionStorage.getItem("profile") 
-            + "'/></div></Button>" +"</div>";
             
+            src.innerHTML = "<div>" + "<Nav.Link>" + sessionStorage.getItem("id") + "</Nav.Link>" + "<button class='profilebutton'> <div class='box'><img class='profile' src='" + sessionStorage.getItem("profile")
+                + "'/></div></Button>" + "</div>";
+           
             // imgsrc.innerHTML = "<img className='profile' src='"+sessionStorage.getItem("profile")+"'/></div>"
             // console.log(sessionStorage.getItem("profile"));
             //         <div style="width:50px; height:50px;border-radius:70%; overflow:hidden;">
@@ -114,7 +120,7 @@ export const SidebarData = () => {
                     <div id="box"></div>
                     <div>
                         {
-                            id === null ? <Button color="inherit" variant='outlined'onClick={() => setSignUpModalOn(true)}>Login</Button>:<Button color="inherit" variant='outlined' onClick={() => setLogOutModalOn(true)}>Logout</Button>
+                            id === null ? <Button color="inherit" variant='outlined' onClick={() => setSignUpModalOn(true)}>Login</Button> : <Button color="inherit" variant='outlined' onClick={() => setLogOutModalOn(true)}>Logout</Button>
                         }
                     </div>
                     {/* 종짱이 만들었던 버튼
