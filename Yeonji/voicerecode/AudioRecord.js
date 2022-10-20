@@ -1,5 +1,7 @@
-import { ConnectingAirportsOutlined, ConstructionOutlined } from "@mui/icons-material";
+import { AutoFixHighSharp, ConnectingAirportsOutlined, ConstructionOutlined } from "@mui/icons-material";
+import axios from "axios";
 import React, { useState, useCallback } from "react";
+
 
 const AudioRecord = () => {
   const [stream, setStream] = useState();
@@ -8,7 +10,7 @@ const AudioRecord = () => {
   const [source, setSource] = useState();
   const [analyser, setAnalyser] = useState();
   const [audioUrl, setAudioUrl] = useState();
-  
+
   const onRecAudio = () => {
     console.log("녹음 시작")
     // 음원정보를 담은 노드를 생성하거나 음원을 실행또는 디코딩 시키는 일을 한다
@@ -35,8 +37,8 @@ const AudioRecord = () => {
       makeSound(stream);
 
       analyser.onaudioprocess = function (e) {
-        // 3분(180초) 지나면 자동으로 음성 저장 및 녹음 중지
-        if (e.playbackTime > 180) {
+        // 1분(60초) 지나면 자동으로 음성 저장 및 녹음 중지
+        if (e.playbackTime > 5) {
           stream.getAudioTracks().forEach(function (track) {
             track.stop();
           });
@@ -49,6 +51,7 @@ const AudioRecord = () => {
             setAudioUrl(e.data);
             setOnRec(true);
           };
+          console.log("dddddd");
         } else {
           setOnRec(false);
         }
@@ -79,25 +82,46 @@ const AudioRecord = () => {
   };
 
 
+
+
   const onSubmitAudioFile = useCallback(() => {
     if (audioUrl) {
-      console.log(URL.createObjectURL(audioUrl)); // 출력된 링크에서 녹음된 오디오 확인 가능
+      console.log(URL.createObjectURL(audioUrl)); // 출력된 링크에서 녹음된 오디오 확인 가능 (blob:https://~~)
+      
+      
     }
+
+
     // File 생성자를 사용해 파일로 변환
-    var file = new File([audioUrl],"name");
-    console.log(file);
-    const sound = new File([audioUrl], "soundBlob", { lastModified: new Date().getTime(), type: "audio" });
-    console.log("파일정보");
-    console.log(sound); // File 정보 출력
+    //var file = new File([audioUrl], "name");
+    //console.log(file);
+    const sound = new File([audioUrl], "recorder", { lastModified: new Date().getTime(), type: "audio/mpeg" });
+    console.log("파일정보", sound);
+
+
+    //서버에 전송
+    axios.post("http://Udangtangtangapp-env.eba-xaipu9ej.ap-northeast-2.elasticbeanstalk.com/yTest", {
+      file: sound
+    })
+      .then(function (check) { //서버에서 주는 리턴값???
+        console.log(check); //data: '나 값이 들어온 것 같음', status: 200, statusText: '', headers: AxiosHeaders, config: {…}, …}
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }, [audioUrl]);
+
 
   return (
     <>
       {/* 시작, 중지 왔다갔다 */}
-      <button type="button" id="recode" onClick={onRec ? onRecAudio : offRecAudio}>녹음 시작 / 중지</button>
-      <button onClick={onSubmitAudioFile}>결과 확인</button>
+  
+      <button type="button" id="recode" onClick={onRecAudio}>녹음 시작</button>
+      <button type="button" id="recode" onClick={offRecAudio}>일지 정지</button>
+      <button onClick={onSubmitAudioFile}>저장</button>
     </>
   );
-};
+
+}
 
 export default AudioRecord;
