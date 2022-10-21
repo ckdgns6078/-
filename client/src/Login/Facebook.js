@@ -1,21 +1,63 @@
-import FacebookLogin from 'react-facebook-login';
-function Facebook(){
-    return (
+import React, { Component } from "react";
+import FacebookLogin from "react-facebook-login";
+
+export default class Facebook extends Component {
+  state = {
+    isLoggedIn: false,
+    userID: "",
+    name: "",
+    email: "",
+    picture: ""
+  };
+
+  responseFacebook = (response) => {
+    console.log(response);
+    if (response.status !== "unknown") {
+      this.setState({
+        isLoggedIn: true,
+        userID: response.userID,
+        name: response.name,
+        email: response.email,
+        picture: response.picture.data.url
+      });
+    }
+  };
+
+  componentClicked = () => {
+    console.log("clicked");
+  };
+
+  render() {
+    const { email, isLoggedIn, name, picture } = this.state;
+    let fbContent;
+
+    if (isLoggedIn) {
+      fbContent = (
+        <div
+          style={{
+            width: "400px",
+            margin: "auto",
+            background: "#f4f4f4",
+            padding: "20px"
+          }}
+        >
+          <img src={picture} alt={name} />
+          <h2>Welcome {name}</h2>
+          Email: {email}
+        </div>
+      );
+    } else {
+      fbContent = (
         <FacebookLogin
-            appId = "1480672229110640"
-            onSuccess={(response) =>{
-                console.log('Login Success!');
-                console.log('id : ', response.id);
-            }}
-            onFail={(error)=>{
-                console.log('Login Failed!');
-                console.log('status : ',error.state);
-            }}
-            onProfileSuccess={(response)=>{
-                console.log('Get Profile Success!');
-                console.log('name: ',response.name);
-            }}
-            />
-    )
+          appId="1480672229110640"
+          autoLoad={true}
+          fields="name,email,picture"
+          onClick={this.componentClicked}
+          callback={this.responseFacebook}
+          icon="fa-facebook"
+        />
+      );
+    }
+    return <div>{fbContent}</div>;
+  }
 }
-export default Facebook;
