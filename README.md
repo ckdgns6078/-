@@ -2,7 +2,13 @@
 
 # 음성인식 API (speech to text)를 활용한 회의록 플렛폼
  
+ 
+ 
+ # page
  https://ckdgns6078.github.io/udangtangtang-try-party/
+
+
+
 
 | 이름 | 학번 | GitHub ID | Email |
 |:---:|:---|:---|:---|
