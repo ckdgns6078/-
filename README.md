@@ -5,10 +5,6 @@
  
  
  # page
- https://ckdgns6078.github.io/udangtangtang-try-party/
-
-
-
 
 | 이름 | 학번 | GitHub ID | Email |
 |:---:|:---|:---|:---|
