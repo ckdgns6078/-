@@ -1,4 +1,4 @@
-import FacebookLogin from 'react-facebook-login';
+import FacebookLogin from '@greatsumini/react-facebook-login';
 function Facebook(){
     return (
         <FacebookLogin
