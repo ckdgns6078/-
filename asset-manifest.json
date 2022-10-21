@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/udangtangtang-try-party/static/css/main.05d0a08b.css",
+    "main.js": "/udangtangtang-try-party/static/js/main.7f7ac6ef.js",
+    "static/js/787.4b9c85f0.chunk.js": "/udangtangtang-try-party/static/js/787.4b9c85f0.chunk.js",
+    "static/media/NaverButton.png": "/udangtangtang-try-party/static/media/NaverButton.4382736d0fcc19a758c7.png",
+    "index.html": "/udangtangtang-try-party/index.html",
+    "main.05d0a08b.css.map": "/udangtangtang-try-party/static/css/main.05d0a08b.css.map",
+    "main.7f7ac6ef.js.map": "/udangtangtang-try-party/static/js/main.7f7ac6ef.js.map",
+    "787.4b9c85f0.chunk.js.map": "/udangtangtang-try-party/static/js/787.4b9c85f0.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.05d0a08b.css",
+    "static/js/main.7f7ac6ef.js"
+  ]
+}
