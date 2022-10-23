@@ -1,3 +1,5 @@
+
+
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import React, {useState, useEffect} from 'react'
@@ -5,34 +7,26 @@ import Form from 'react-bootstrap/Form';
 import axios from "axios";
 
 const HomeLest = ({show , onHide}) => {
-  const [inputs, setInputs] = useState({  
-    roomhost: '',
-    roompw: '', 
-    roomname: '',
-  })
-
-  const [roomhost,setroomhost] = useState("");
-  const [roompw,setroompw] = useState("");
-  const [roomname,setroomname] = useState("");
-
-  const onChange1 = (event) =>{
-    setroomhost(event.target.value)
+  const [roomPw,setRoomPw] = useState("");
+  const [roomName,setRoomName] = useState("");
+  const [roomKey,setRoomKey] = useState("");
+  const id = sessionStorage.getItem("id");
+  const handleSubmit = async  () => {
+    //axios로 서버에 보낸다
+    try{
+        await axios.post('http://192.168.2.65:5000/createRoom',{
+        roomName: roomName, 
+        roomKey:roomKey,
+        roomPw: roomPw,
+        roomHost: id
+    })
+    }
+    catch (e){
+      console.error(e);
+    }
+    
   }
-  const onChange2 = (event) =>{
-    setroompw(event.target.value)
-  }
 
-  const onChange3 = (event) =>{
-    setroomname(event.target.value)
-  }
-
-  const handleSubmit = () => {
-   try {
-    axios.post("http://Udangtangtangapp-env.eba-xaipu9ej.ap-northeast-2.elasticbeanstalk.com/createRoom", {roomHost: roomhost, roomPw: roompw, roomName: roomname})
-   } catch (error) {
-    console.error(error)
-   } 
-  }
 
   return (
     <Modal
@@ -42,7 +36,6 @@ const HomeLest = ({show , onHide}) => {
     aria-labelledby="contained-modal-title-vcenter"
     centered
   >
-
     <Modal.Header closeButton>
       <Modal.Title id="contained-modal-title-vcenter">
         방 만들기
@@ -54,34 +47,37 @@ const HomeLest = ({show , onHide}) => {
     <Form>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>방제목 </Form.Label>
-        <Form.Control type="text" placeholder="방제목 입력하세요" onChange = {onChange1}/>
-        <Form.Text className="text-muted"  />
+        <Form.Control type="text" placeholder="방제목 입력하세요" onChange = {(e)=>setRoomKey(e.target.value)}/>
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
         <Form.Label>방이름(key)</Form.Label>
-        <Form.Control type="text" placeholder="방이름 입력하세요" onChange = {onChange2}/>
+        <Form.Control  type="text" placeholder="방이름 입력하세요" onChange = {(e)=>setRoomName(e.target.value)}/>
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
         <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="비밀번호를 입력 하세요"  onChange = {onChange3}/>
+        <Form.Control type="password" placeholder="비밀번호를 입력 하세요"  onChange = {(e)=>setRoomPw(e.target.value)}/>
       </Form.Group>
+{/*       
+      <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Label>호스트</Form.Label>
+        <Form.Control type="password" placeholder="호스트를 입력 하세요"  onChange = {(e)=>setRoomHost(e.target.value)}/>
+      </Form.Group>
+       */}
       
     </Form>
     </Modal.Body>
     <Modal.Footer>
-    <Form onSubmit = {handleSubmit}>
-      <Button onClick={handleSubmit} variant="primary" type="submit">
-          Submit
+    <Button onClick={handleSubmit} variant="primary" type="submit">
+        Submit
       </Button>
-    </Form>
-    <Button onClick={onHide} >Close</Button>
+      <Button onClick={onHide} >Close</Button>
     </Modal.Footer>
+     
   </Modal>
+
   )
 }
 
 export default HomeLest
-
-

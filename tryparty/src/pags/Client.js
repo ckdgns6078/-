@@ -1,8 +1,6 @@
 
-import React from 'react'
 import { Container } from 'react-bootstrap'
-import Client_1 from './Client_1'
-import Client_2 from './Client_2'
+
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
@@ -14,13 +12,13 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import AudioFileIcon from '@mui/icons-material/AudioFile';
 import PauseIcon from '@mui/icons-material/Pause';
 import Table from 'react-bootstrap/Table';
-import Skeleton from '@mui/material/Skeleton';
-import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
-
+import React, { useEffect, useState } from 'react'
+import { useParams } from "react-router-dom";
+import axios from 'axios';
 
 
 import PlayCircleFilledWhiteOutlinedIcon from '@mui/icons-material/PlayCircleFilledWhiteOutlined';
+import { Link } from '@mui/material';
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
@@ -39,12 +37,93 @@ const data = [
 
 
   }]
+
+
+
+
+
+
+
+
+
+  
 const Client = () => {
+
+    const param = useParams()
+    
+    const  params  = useParams()
+    
+    
+    const [data, setData] = useState();
+    
+      useEffect( () =>{
+    
+     (async ()=>{
+      try {
+        console.log(window.location.href);
+        console.log(params);
+           const res = await axios.post("http://192.168.2.65:5000/readContents",{
+            roomNum : params.id,
+            
+            // meetNum : "ASd" 
+           });const res2 = await axios.post("http://192.168.2.65:5000/readReply",{
+            roomNum : params.id,
+            // meetNum : "ASd" 
+            
+          
+           });
+
+
+        
+           console.log(res.data);
+           setData(res.data);
+           console.log(res2.data);
+           setData(res2.data);
+        } catch (error) {
+            console.log(error)
+        }
+      })();
+        
+    },[])
+    useEffect( () =>{
+
+      (async ()=>{
+       try {
+         console.log(window.location.href);
+         console.log(params);
+            const res = await axios.post("http://192.168.2.65:5000/readMeeting",{
+             roomNum : params.id
+            });
+            console.log(res.data);
+            setData(res.data);
+         } catch (error) {
+             console.log(error)
+         }
+       })();
+         
+     },[])
+     
+    
+    
   return (
 
      
         <Container maxWidth="sm" >
-            <h2>회의 이름</h2>
+      <div>
+      {
+           
+              <div >
+                 <div > </div>
+               
+
+              </div>
+
+      }
+      </div>
+     
+
+
+   
           <Grid container>
 
           <Box sx={{ flexGrow: 1 , 
@@ -191,15 +270,7 @@ const Client = () => {
       noValidate
       autoComplete="off"
     >
-      <div>
-        <tr>
-          <td><TextField label="채팅 입력" id="outlined-size-normal" defaultValue="입력 하세요" /></td>
-          <td><button>asdasdas</button></td>
-        </tr>
-        
-      </div>
 
-   
    
     </Box>
     </Item>

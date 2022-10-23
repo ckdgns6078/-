@@ -2,7 +2,6 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import React, {useState, useEffect} from 'react'
 import Form from 'react-bootstrap/Form';
-
 import axios from "axios";
 const Meeting = ({show , onHide}) => {
 
@@ -28,7 +27,7 @@ const Meeting = ({show , onHide}) => {
 
   const handleSubmit = () => {
    try {
-    axios.post("http://Udangtangtangapp-env.eba-xaipu9ej.ap-northeast-2.elasticbeanstalk.com/", {roomKey: roomKey, roomPw: roompw })
+    axios.post("http://192.168.2.65:5000/readRoom/joinRoom", {roomKey: roomKey, roomPw: roompw })
    } catch (error) {
     console.error(error)
    } 

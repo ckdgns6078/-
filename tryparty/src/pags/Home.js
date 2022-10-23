@@ -1,12 +1,16 @@
 
 import Button from 'react-bootstrap/Button';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Table from 'react-bootstrap/Table';
+
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from "@mui/material/styles";
+
+import { Box } from "@mui/material";
 import InputBase from "@mui/material/InputBase";
 import Sekes from './Sekes';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 
 const Search = styled("div")(({ theme }) => ({
@@ -53,95 +57,89 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 
-const Sekesgo= () => {
+const Sekesgo = () => {
   window.location.href = 'http://localhost:3000/Sekes'
-  
+
 }
 
 const Home = () => {
+  const [data, setData] = useState();
+
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await axios.post("http://192.168.2.65:5000/readRoom",
+          {
+            id: sessionStorage.getItem("id")
+          });
+          
+        console.log(res.data)
+        setData(res.data);
+      } catch (error) {
+        console.log(error)
+      }
+    })();
+  }, [])
+
+
+
+
+
+
+
   return (
     //responsive 테이블은 반응 형으로 만들어 줌
-    <Table responsive="lg">
+    <Box width="100%" display="flex" flexDirection="column" m="20px">
+      <Table responsive="lg">
+        <thead>
+          <tr>
+            <td>
+              <h2>HOME</h2>
+            </td>
+            <td bg="right">
+              <Search>
+                <SearchIconWrapper>
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase
+                  placeholder="Search…"
+                  inputProps={{ "aria-label": "search" }}
+                />
+              </Search>
 
-      <thead>
+            </td>
+            <td> <Button variant="outline-secondary">Search</Button></td>
+          </tr>
+          <tr>
+            <th>번호</th>
+            <th>방이름</th>
+            <th>관리자 명</th>
+            <th>인원</th>
+          </tr>
+        </thead>
 
-        <tr>
-          <td>
-            <h2>HOME</h2>
-          </td>
-          <td bg="right">
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ "aria-label": "search" }}
-              />
-            </Search>
-           
-          </td>
-          <td> <Button variant="outline-secondary">Search</Button></td>
-        </tr>
-        <tr>
-          <th>번호</th>
-          <th>방이름</th>
-          <th>관리자 명</th>
-          <th>인원</th>
-        </tr>
-      </thead>
 
-      <tbody>
-        <tr onClick= {Sekesgo}>
-          <td>1</td>
-          <td >집가고 싶다</td>
-          <td>조창훈</td>
-          <td>2</td>
-        </tr>
-        <tr onClick= "goSekes()">
-          <td>2</td>
-          <td>나도</td>
-          <td>양연지</td>
-          <td>2</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>집 왜감?</td>
-          <td>락스</td>
-          <td>2</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>집 왜감?</td>
-          <td>락스</td>
-          <td>2</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>집 왜감?</td>
-          <td>락스</td>
-          <td>2</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>집 왜감?</td>
-          <td>락스</td>
-          <td>2</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>집 왜감?</td>
-          <td>락스</td>
-          <td>2</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>집 왜감?</td>
-          <td>락스</td>
-          <td>2</td>
-        </tr>
-      </tbody>
-    </Table>
+        <tbody>
+          {
+            data && data.map((e, idx) =>
+
+              <tr >
+                <th></th>
+                <th>
+                  <Link key={idx} to={`/Sekes/${e.roomNum}/`}> {e.roomName}</Link>
+                </th>
+                <th>{e.roomHost}</th>
+                <th>
+                  {e.roomMember}
+                </th>
+              </tr>
+
+            )
+          }
+
+        </tbody>
+      </Table></Box>
 
 
   )
